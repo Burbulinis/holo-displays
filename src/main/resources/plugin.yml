@@ -1,0 +1,5 @@
+main: me.burb.holodisplays.HoloDisplays
+name: holo-displays
+version: '${project.version}'
+api-version: '1.13'
+author: Burbulinis
