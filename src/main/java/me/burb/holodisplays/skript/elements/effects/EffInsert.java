@@ -46,10 +46,14 @@ public class EffInsert extends Effect {
 
         ItemStack item = null;
         String text = null;
-        if (object instanceof ItemType)
+        if (object instanceof ItemType) {
             item = Converters.convert(object, ItemStack.class);
-        else if (object instanceof String)
+            if (item == null)
+                return;
+        }
+        else if (object instanceof String) {
             text = (String) object;
+        }
 
         if (hologram.getLines().size() != 0)
             if (text == null)

@@ -5,7 +5,6 @@ import ch.njol.skript.classes.Changer;
 import ch.njol.skript.config.SectionNode;
 import ch.njol.skript.lang.*;
 import ch.njol.skript.util.Direction;
-import ch.njol.skript.variables.Variables;
 import ch.njol.util.Kleenean;
 import me.burb.holodisplays.HoloDisplays;
 import me.filoghost.holographicdisplays.api.hologram.Hologram;
