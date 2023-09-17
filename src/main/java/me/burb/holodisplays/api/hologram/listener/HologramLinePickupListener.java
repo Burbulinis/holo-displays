@@ -1,6 +1,7 @@
 package me.burb.holodisplays.api.hologram.listener;
 
 import me.burb.holodisplays.HoloDisplays;
+import me.burb.holodisplays.api.hologram.bukkitevents.HologramLinePickupLineEvent;
 import me.filoghost.holographicdisplays.api.hologram.Hologram;
 import me.filoghost.holographicdisplays.api.hologram.line.HologramLine;
 import me.filoghost.holographicdisplays.api.hologram.line.HologramLinePickupEvent;
@@ -18,7 +19,7 @@ public class HologramLinePickupListener implements me.filoghost.holographicdispl
 
     @Override
     public void onPickup(@NotNull HologramLinePickupEvent e) {
-        me.burb.holodisplays.api.hologram.bukkitevents.HologramLinePickupEvent event = new me.burb.holodisplays.api.hologram.bukkitevents.HologramLinePickupEvent(e.getPlayer(), hologram, hologramLine);
+        HologramLinePickupLineEvent event = new HologramLinePickupLineEvent(e.getPlayer(), hologram, hologramLine);
         HoloDisplays.getPluginManager().callEvent(event);
     }
 }

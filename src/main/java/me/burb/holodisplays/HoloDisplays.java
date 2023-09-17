@@ -35,14 +35,16 @@ public class HoloDisplays extends JavaPlugin {
 
         if (!Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays")) {
             getLogger().severe("*** HolographicDisplays is not installed or not enabled. ***");
-            getLogger().severe("*** Skologram will be disabled. ***");
+            getLogger().severe("*** holo-displays will be disabled. ***");
             setEnabled(false);
+            return;
         }
 
         if (!Bukkit.getPluginManager().isPluginEnabled("Skript")) {
             getLogger().severe("*** Skript is not installed or not enabled. ***");
-            getLogger().severe("*** Skologram will be disabled. ***");
+            getLogger().severe("*** holo-displays will be disabled. ***");
             setEnabled(false);
+            return;
         }
 
         addon = Skript.registerAddon(this);

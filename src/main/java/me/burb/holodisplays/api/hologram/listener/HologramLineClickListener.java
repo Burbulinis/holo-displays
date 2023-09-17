@@ -1,6 +1,7 @@
 package me.burb.holodisplays.api.hologram.listener;
 
 import me.burb.holodisplays.HoloDisplays;
+import me.burb.holodisplays.api.hologram.bukkitevents.HologramLineClickLineEvent;
 import me.filoghost.holographicdisplays.api.hologram.Hologram;
 import me.filoghost.holographicdisplays.api.hologram.line.HologramLine;
 import me.filoghost.holographicdisplays.api.hologram.line.HologramLineClickEvent;
@@ -18,7 +19,7 @@ public class HologramLineClickListener implements me.filoghost.holographicdispla
 
     @Override
     public void onClick(@NotNull HologramLineClickEvent e) {
-        me.burb.holodisplays.api.hologram.bukkitevents.HologramLineClickEvent event = new me.burb.holodisplays.api.hologram.bukkitevents.HologramLineClickEvent(e.getPlayer(), hologram, hologramLine);
+        HologramLineClickLineEvent event = new HologramLineClickLineEvent(e.getPlayer(), hologram, hologramLine);
         HoloDisplays.getPluginManager().callEvent(event);
     }
 }

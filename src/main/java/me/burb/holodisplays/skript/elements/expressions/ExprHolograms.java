@@ -15,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
 public class ExprHolograms extends SimpleExpression<Hologram> {
 
     static {
-        Skript.registerExpression(ExprHolograms.class, Hologram.class, ExpressionType.SIMPLE, "[all [of the]] holograms");
+        Skript.registerExpression(ExprHolograms.class, Hologram.class, ExpressionType.SIMPLE, "[all [[of] the]] holograms");
     }
 
     private boolean isSingle;

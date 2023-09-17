@@ -3,17 +3,16 @@ package me.burb.holodisplays.skript.elements;
 import ch.njol.skript.classes.Changer;
 import ch.njol.skript.classes.ClassInfo;
 import ch.njol.skript.classes.Parser;
-import ch.njol.skript.classes.Serializer;
 import ch.njol.skript.lang.ParseContext;
 import ch.njol.skript.registrations.Classes;
 import ch.njol.util.coll.CollectionUtils;
-import ch.njol.yggdrasil.Fields;
 import me.filoghost.holographicdisplays.api.hologram.Hologram;
+import me.filoghost.holographicdisplays.api.hologram.HologramLines;
 import me.filoghost.holographicdisplays.api.hologram.VisibilitySettings;
+import me.filoghost.holographicdisplays.api.hologram.line.ItemHologramLine;
+import me.filoghost.holographicdisplays.api.hologram.line.TextHologramLine;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.io.StreamCorruptedException;
 
 public class Types {
 
@@ -25,7 +24,7 @@ public class Types {
                 .name("Hologram")
                 .description("Represents a HolographicDisplays hologram")
                 .examples("")
-                .since("1.0-SNAPSHOT")
+                .since("1.0")
                 .requiredPlugins("HolographicDisplays")
                 .changer(new Changer<>() {
                     @Override
@@ -63,47 +62,126 @@ public class Types {
                         return false;
                     }
                 })
-                .serializer(new Serializer<>() {
+        );
+
+        Classes.registerClass(new ClassInfo<>(HologramLines.class, "hologramlines")
+                .user("hologram lines?")
+                .name("Hologram Lines")
+                .description("Hologram Lines. Represents the lines of a hologram. This accounts for every line, different from a Text Hologram Line and Item Hologram Line")
+                .examples("")
+                .requiredPlugins("HolographicDisplays")
+                .since("1.0")
+                .changer(new Changer<>() {
                     @Override
-                    public @NotNull Fields serialize(Hologram o) {
-                        Fields f = new Fields();
-                        f.putObject("hologram", o);
-                        return f;
+                    public Class<?>[] acceptChange(@NotNull ChangeMode mode) {
+                        return (mode == ChangeMode.DELETE) ? CollectionUtils.array() : null;
                     }
 
                     @Override
-                    public Hologram deserialize(@NotNull Fields f) {
-                        try {
-                            return f.getAndRemoveObject("hologram", Hologram.class);
-                        } catch (StreamCorruptedException e) {
-                            return null;
+                    public void change(HologramLines @NotNull [] what, Object @NotNull [] delta, @NotNull ChangeMode mode) {
+                        if (mode != ChangeMode.DELETE) return;
+
+                        for (HologramLines lines : what) {
+                            lines.clear();
                         }
                     }
+                })
+                .parser(new Parser<>() {
 
                     @Override
-                    public void deserialize(Hologram o, @NotNull Fields f) {
-                        assert false;
+                    public @NotNull String toString(HologramLines o, int flags) {
+                        return "hologram lines";
                     }
 
                     @Override
-                    public boolean mustSyncDeserialization() {
-                        return true;
+                    public @NotNull String toVariableNameString(HologramLines o) {
+                        return "hologram lines";
                     }
 
                     @Override
-                    protected boolean canBeInstantiated() {
+                    @Nullable
+                    public HologramLines parse(@NotNull String input, @NotNull ParseContext context) {
+                        return null;
+                    }
+
+                    @Override
+                    public boolean canParse(@NotNull ParseContext context) {
                         return false;
                     }
                 })
         );
 
-        Classes.registerClass(new ClassInfo<>(VisibilitySettings.Visibility.class, "visibility settings")
+        Classes.registerClass(new ClassInfo<>(ItemHologramLine.class, "itemhologramline")
+                .user("item hologram lines?")
+                .name("Item Hologram Line")
+                .description("Item Hologram Line. Represents a line of a hologram, that is always an item")
+                .examples("")
+                .requiredPlugins("HolographicDisplays")
+                .since("1.0")
+                .parser(new Parser<>() {
+
+                    @Override
+                    public @NotNull String toString(ItemHologramLine o, int flags) {
+                        return "item hologram line of value '" + Classes.toString(o.getItemStack()) + "'";
+                    }
+
+                    @Override
+                    public @NotNull String toVariableNameString(ItemHologramLine o) {
+                        return "item hologram line of value '" + Classes.toString(o.getItemStack()) + "'";
+                    }
+
+                    @Override
+                    @Nullable
+                    public ItemHologramLine parse(@NotNull String input, @NotNull ParseContext context) {
+                        return null;
+                    }
+
+                    @Override
+                    public boolean canParse(@NotNull ParseContext context) {
+                        return false;
+                    }
+                })
+        );
+
+        Classes.registerClass(new ClassInfo<>(TextHologramLine.class, "texthologramline")
+                .user("text hologram lines?")
+                .name("Text Hologram Line")
+                .description("Text Hologram Line. Represents a line of a hologram, that is always a text")
+                .examples("")
+                .requiredPlugins("HolographicDisplays")
+                .since("1.0")
+                .parser(new Parser<>() {
+
+                    @Override
+                    public @NotNull String toString(TextHologramLine o, int flags) {
+                        return "text hologram line of value '" + Classes.toString(o.getText()) + "'";
+                    }
+
+                    @Override
+                    public @NotNull String toVariableNameString(TextHologramLine o) {
+                        return "text hologram line of value '" + Classes.toString(o.getText()) + "'";
+                    }
+
+                    @Override
+                    @Nullable
+                    public TextHologramLine parse(@NotNull String input, @NotNull ParseContext context) {
+                        return null;
+                    }
+
+                    @Override
+                    public boolean canParse(@NotNull ParseContext context) {
+                        return false;
+                    }
+                })
+        );
+
+        Classes.registerClass(new ClassInfo<>(VisibilitySettings.Visibility.class, "visibilitysettings")
                 .user("visibility( settings?)?")
                 .name("Visibility")
                 .description("Visibility Settings. Specify whether HIDDEN or VISIBLE visibility settings of a hologram")
                 .examples("")
                 .requiredPlugins("HolographicDisplays")
-                .since("1.0-SNAPSHOT")
+                .since("1.0")
         );
     }
 }
