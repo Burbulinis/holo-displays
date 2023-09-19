@@ -1,4 +1,4 @@
-package me.burb.holodisplays.skript.elements.expressions;
+package me.burb.holodisplays.skript.expressions.hologram;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Expression;
@@ -60,6 +60,7 @@ public class ExprNearestHologram extends SimpleExpression<Hologram> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public boolean init(Expression<?> @NotNull [] exprs, int matchedPattern, @NotNull Kleenean isDelayed, SkriptParser.@NotNull ParseResult parseResult) {
         location = (Expression<Location>) exprs[0];
         return true;

@@ -9,7 +9,7 @@
     <version>1.0</version>
 
     <properties>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -111,7 +111,7 @@
         <dependency>
             <groupId>me.filoghost.holographicdisplays</groupId>
             <artifactId>holographicdisplays-api</artifactId>
-            <version>3.0.3</version>
+            <version>3.0.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

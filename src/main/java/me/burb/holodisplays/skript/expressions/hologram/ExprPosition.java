@@ -1,4 +1,4 @@
-package me.burb.holodisplays.skript.elements.expressions;
+package me.burb.holodisplays.skript.expressions.hologram;
 
 import ch.njol.skript.classes.Changer.ChangeMode;
 import ch.njol.skript.expressions.base.SimplePropertyExpression;
@@ -31,18 +31,8 @@ public class ExprPosition extends SimplePropertyExpression<Hologram, Location> {
 
         Location location = (Location) delta[0];
 
-        switch (mode) {
-            case SET:
-                hologram.setPosition(location);
-                break;
-            case REMOVE:
-            case DELETE:
-            case RESET:
-            case ADD:
-            case REMOVE_ALL:
-            default:
-                assert false;
-        }
+        if (mode == ChangeMode.SET)
+            hologram.setPosition(location);
     }
 
     @Override

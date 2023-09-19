@@ -1,4 +1,4 @@
-package me.burb.holodisplays.skript.elements.expressions;
+package me.burb.holodisplays.skript.expressions.hologram;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Expression;

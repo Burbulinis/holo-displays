@@ -49,7 +49,7 @@ public class HoloDisplays extends JavaPlugin {
 
         addon = Skript.registerAddon(this);
         try {
-            addon.loadClasses("me.burb.holodisplays.skript", "elements");
+            addon.loadClasses("me.burb.holodisplays", "skript");
         } catch (IOException e) {
             e.printStackTrace();
         }

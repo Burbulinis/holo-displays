@@ -1,5 +1,4 @@
-package me.burb.holodisplays.skript.elements.effects;
-
+package me.burb.holodisplays.skript.effects;
 import ch.njol.skript.Skript;
 import ch.njol.skript.aliases.ItemType;
 import ch.njol.skript.classes.Changer;
@@ -8,22 +7,17 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.registrations.Converters;
 import ch.njol.util.Kleenean;
-import me.burb.holodisplays.api.hologram.listener.HologramLineClickListener;
-import me.burb.holodisplays.api.hologram.listener.HologramLinePickupListener;
 import me.filoghost.holographicdisplays.api.hologram.Hologram;
-import me.filoghost.holographicdisplays.api.hologram.line.HologramLine;
-import me.filoghost.holographicdisplays.api.hologram.line.ItemHologramLine;
-import me.filoghost.holographicdisplays.api.hologram.line.TextHologramLine;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class EffAppend extends Effect {
+public class EffAppendLine extends Effect {
 
     static {
-        Skript.registerEffect(EffAppend.class,
-                "append %itemtype/string% to [[the] lines of [[the] hologram]] %hologram% [and store (the [new] line|it) in %object%]"
+        Skript.registerEffect(EffAppendLine.class,
+                "(append|add) %itemtype/string% to [[the] lines of [[the] hologram]] %hologram% [and store (the [new] line|it) in %object%]"
         );
     }
 
@@ -54,16 +48,8 @@ public class EffAppend extends Effect {
             else
                 hologram.getLines().appendText(text);
 
-        HologramLine line = hologram.getLines().get(hologram.getLines().size() - 1);
-        if (line instanceof ItemHologramLine) {
-            ((ItemHologramLine) line).setClickListener(new HologramLineClickListener(hologram, line));
-            ((ItemHologramLine) line).setPickupListener(new HologramLinePickupListener(hologram, line));
-        } else if (line instanceof TextHologramLine) {
-            ((TextHologramLine) line).setClickListener(new HologramLineClickListener(hologram, line));
-        }
-
         if (saveTo != null)
-            saveTo.change(e, new Object[]{line}, Changer.ChangeMode.SET);
+            saveTo.change(e, new Object[]{hologram.getLines().get(hologram.getLines().size() - 1)}, Changer.ChangeMode.SET);
     }
 
     @Override
@@ -72,6 +58,7 @@ public class EffAppend extends Effect {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public boolean init(Expression<?> @NotNull [] exprs, int matchedPattern, @NotNull Kleenean isDelayed, SkriptParser.@NotNull ParseResult parseResult) {
         object = exprs[0];
         hologram = (Expression<Hologram>) exprs[1];

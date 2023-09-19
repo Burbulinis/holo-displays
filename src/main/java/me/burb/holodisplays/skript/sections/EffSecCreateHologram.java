@@ -1,4 +1,4 @@
-package me.burb.holodisplays.skript.elements.sections;
+package me.burb.holodisplays.skript.sections;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.classes.Changer;
@@ -21,7 +21,6 @@ public class EffSecCreateHologram extends EffectSection {
     public static class HologramCreateEvent extends Event {
 
         public Hologram lastCreated;
-        private Hologram hologram;
 
         public HologramCreateEvent(Hologram hologram) {
             lastCreated = hologram;
@@ -30,10 +29,6 @@ public class EffSecCreateHologram extends EffectSection {
         @Override
         public @NotNull HandlerList getHandlers() {
             throw new IllegalStateException();
-        }
-
-        public Hologram getHologram() {
-            return hologram;
         }
     }
 
@@ -49,6 +44,7 @@ public class EffSecCreateHologram extends EffectSection {
     private Expression<?> object;
 
     @Override
+    @SuppressWarnings("unchecked")
     public boolean init(Expression<?> @NotNull [] exprs, int matchedPattern, @NotNull Kleenean isDelayed, SkriptParser.@NotNull ParseResult parseResult, @Nullable SectionNode sectionNode, @Nullable List<TriggerItem> triggerItems) {
         if (exprs.length == 3 && exprs[2].acceptChange(Changer.ChangeMode.SET) == null)  {
             Skript.error(exprs[2] + " can't be set to anything");
@@ -72,7 +68,6 @@ public class EffSecCreateHologram extends EffectSection {
         Location loc = Direction.combine(direction, location).getSingle(e);
         if (loc != null) {
             Hologram hologram = HoloDisplays.getHDAPI().createHologram(loc);
-
 
             if (object != null)
                 object.change(e, new Hologram[]{hologram}, Changer.ChangeMode.SET);

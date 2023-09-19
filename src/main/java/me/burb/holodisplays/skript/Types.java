@@ -1,4 +1,4 @@
-package me.burb.holodisplays.skript.elements;
+package me.burb.holodisplays.skript;
 
 import ch.njol.skript.classes.Changer;
 import ch.njol.skript.classes.ClassInfo;
@@ -8,7 +8,9 @@ import ch.njol.skript.registrations.Classes;
 import ch.njol.util.coll.CollectionUtils;
 import me.filoghost.holographicdisplays.api.hologram.Hologram;
 import me.filoghost.holographicdisplays.api.hologram.HologramLines;
+import me.filoghost.holographicdisplays.api.hologram.PlaceholderSetting;
 import me.filoghost.holographicdisplays.api.hologram.VisibilitySettings;
+import me.filoghost.holographicdisplays.api.hologram.line.HologramLine;
 import me.filoghost.holographicdisplays.api.hologram.line.ItemHologramLine;
 import me.filoghost.holographicdisplays.api.hologram.line.TextHologramLine;
 import org.jetbrains.annotations.NotNull;
@@ -43,12 +45,12 @@ public class Types {
                 .parser(new Parser<>() {
                     @Override
                     public @NotNull String toString(Hologram o, int flags) {
-                        return "hologram at'" + Classes.toString(o.getPosition().toLocation()) + "'";
+                        return "hologram at '" + Classes.toString(o.getPosition().toLocation()) + "'";
                     }
 
                     @Override
                     public @NotNull String toVariableNameString(Hologram o) {
-                        return "hologram at'" + Classes.toString(o.getPosition().toLocation()) + "'";
+                        return "hologram at '" + Classes.toString(o.getPosition().toLocation()) + "'";
                     }
 
                     @Override
@@ -111,6 +113,15 @@ public class Types {
                 })
         );
 
+        Classes.registerClass(new ClassInfo<>(HologramLine.class, "hologramline")
+                .user("hologram lines?")
+                .name("Hologram Line")
+                .description("Hologram Line. Represents a hologram line, may be an Item Hologram Line, or a Text Hologram Line")
+                .examples("")
+                .requiredPlugins("HolographicDisplays")
+                .since("1.0")
+        );
+
         Classes.registerClass(new ClassInfo<>(ItemHologramLine.class, "itemhologramline")
                 .user("item hologram lines?")
                 .name("Item Hologram Line")
@@ -122,12 +133,12 @@ public class Types {
 
                     @Override
                     public @NotNull String toString(ItemHologramLine o, int flags) {
-                        return "item hologram line of value '" + Classes.toString(o.getItemStack()) + "'";
+                        return "item hologram line with item '" + Classes.toString(o.getItemStack()) + "'";
                     }
 
                     @Override
                     public @NotNull String toVariableNameString(ItemHologramLine o) {
-                        return "item hologram line of value '" + Classes.toString(o.getItemStack()) + "'";
+                        return "item hologram line with item '" + Classes.toString(o.getItemStack()) + "'";
                     }
 
                     @Override
@@ -154,12 +165,12 @@ public class Types {
 
                     @Override
                     public @NotNull String toString(TextHologramLine o, int flags) {
-                        return "text hologram line of value '" + Classes.toString(o.getText()) + "'";
+                        return "text hologram line with text '" + o.getText() + "'";
                     }
 
                     @Override
                     public @NotNull String toVariableNameString(TextHologramLine o) {
-                        return "text hologram line of value '" + Classes.toString(o.getText()) + "'";
+                        return "text hologram line with text '" + o.getText() + "'";
                     }
 
                     @Override
@@ -179,6 +190,15 @@ public class Types {
                 .user("visibility( settings?)?")
                 .name("Visibility")
                 .description("Visibility Settings. Specify whether HIDDEN or VISIBLE visibility settings of a hologram")
+                .examples("")
+                .requiredPlugins("HolographicDisplays")
+                .since("1.0")
+        );
+
+        Classes.registerClass(new ClassInfo<>(PlaceholderSetting.class, "placeholdersetting")
+                .user("placeholder( settings?)?")
+                .name("Placeholder Setting")
+                .description("A placeholder setting. A hologram may have a placeholder setting: DEFAULT (equivalent to DISABLE ALL), DISABLE ALL, and ENABLE ALL")
                 .examples("")
                 .requiredPlugins("HolographicDisplays")
                 .since("1.0")

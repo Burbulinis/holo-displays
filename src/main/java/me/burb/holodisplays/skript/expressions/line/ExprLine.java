@@ -1,4 +1,4 @@
-package me.burb.holodisplays.skript.elements.expressions;
+package me.burb.holodisplays.skript.expressions.line;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.classes.Changer;
@@ -62,17 +62,8 @@ public class ExprLine extends SimpleExpression<HologramLine> {
             return;
         line -= 1;
 
-        switch (mode) {
-            case SET:
-            case REMOVE:
-            case DELETE:
-                hologramLines.remove(line);
-            case RESET:
-            case ADD:
-            case REMOVE_ALL:
-            default:
-                assert false;
-        }
+        if (mode == Changer.ChangeMode.DELETE)
+            hologramLines.remove(line);
     }
 
     @Override
@@ -91,6 +82,7 @@ public class ExprLine extends SimpleExpression<HologramLine> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public boolean init(Expression<?> @NotNull [] exprs, int matchedPattern, @NotNull Kleenean isDelayed, SkriptParser.@NotNull ParseResult parseResult) {
         integer = (Expression<Integer>) exprs[0];
         hologramLines = (Expression<HologramLines>) exprs[1];

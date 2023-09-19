@@ -1,4 +1,4 @@
-package me.burb.holodisplays.skript.elements.expressions;
+package me.burb.holodisplays.skript.expressions.line;
 
 import ch.njol.skript.expressions.base.SimplePropertyExpression;
 import me.filoghost.holographicdisplays.api.hologram.Hologram;

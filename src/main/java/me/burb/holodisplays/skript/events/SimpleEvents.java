@@ -1,11 +1,11 @@
-package me.burb.holodisplays.skript.elements.events;
+package me.burb.holodisplays.skript.events;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.util.SimpleEvent;
 import ch.njol.skript.registrations.EventValues;
 import ch.njol.skript.util.Getter;
 import me.burb.holodisplays.api.hologram.bukkitevents.HologramLineClickLineEvent;
-import me.burb.holodisplays.skript.elements.sections.EffSecCreateHologram;
+import me.burb.holodisplays.skript.sections.EffSecCreateHologram;
 import me.filoghost.holographicdisplays.api.hologram.Hologram;
 import me.filoghost.holographicdisplays.api.hologram.line.HologramLine;
 import org.bukkit.entity.Player;
@@ -19,12 +19,7 @@ public class SimpleEvents {
                 .since("1.0")
                 .examples("on hologram create")
                 .requiredPlugins("HolographicDisplays");
-        EventValues.registerEventValue(EffSecCreateHologram.HologramCreateEvent.class, Hologram.class, new Getter<>() {
-            @Override
-            public @Nullable Hologram get(EffSecCreateHologram.HologramCreateEvent e) {
-                return e.getHologram();
-            }
-        }, EventValues.TIME_NOW);
+        // register hologram eventvalue for this event ^
 
         Skript.registerEvent("Hologram Line Click", SimpleEvent.class, HologramLineClickLineEvent.class, "hologram line click")
                 .description("Called when a player clicks on a line of a hologram")

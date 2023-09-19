@@ -1,11 +1,15 @@
-package me.burb.holodisplays.skript.elements.expressions;
+package me.burb.holodisplays.skript.expressions.line;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.aliases.ItemType;
+import ch.njol.skript.classes.Changer;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.util.SimpleExpression;
+import ch.njol.skript.registrations.Converters;
 import ch.njol.util.Kleenean;
+import ch.njol.util.coll.CollectionUtils;
 import me.filoghost.holographicdisplays.api.hologram.line.ItemHologramLine;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
@@ -33,6 +37,28 @@ public class ExprLineItem extends SimpleExpression<ItemStack> {
     }
 
     @Override
+    public void change(@NotNull Event e, Object[] delta, @NotNull Changer.ChangeMode mode) {
+        if (delta == null)
+            return;
+
+        ItemHologramLine line = this.line.getSingle(e);
+        if (line == null)
+            return;
+
+        ItemStack item = Converters.convert(delta[0], ItemStack.class); // imagine i didnt have converter here
+        if (item == null)
+            return;
+
+        if (mode == Changer.ChangeMode.SET)
+            line.setItemStack(item);
+    }
+
+    @Override
+    public Class<?>[] acceptChange(final @NotNull Changer.ChangeMode mode) {
+        return (mode == Changer.ChangeMode.SET) ? CollectionUtils.array(ItemType.class) : null;
+    }
+
+    @Override
     public boolean isSingle() {
         return true;
     }
@@ -48,6 +74,7 @@ public class ExprLineItem extends SimpleExpression<ItemStack> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public boolean init(Expression<?> @NotNull [] exprs, int matchedPattern, @NotNull Kleenean isDelayed, SkriptParser.@NotNull ParseResult parseResult) {
         line = (Expression<ItemHologramLine>) exprs[0];
         return true;
